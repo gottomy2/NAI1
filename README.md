@@ -4,7 +4,7 @@ Znajdują się na nim rozwiązania zadań z ćwiczeń.
 Autor rozwiązań: Igor Motowidło  
 
 # Zadanie 1
-Stworzenie programu uruchomiajacego okno z odwroconym widokiem z kamery.  
+Stworzenie programu inicjującego okno z odwroconym widokiem z kamery.  
 
   Link do pliku .exe:  
   https://www.easypaste.org/file/QxZX3Jyn/zad1.exe?lang=pl  
