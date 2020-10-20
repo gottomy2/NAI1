@@ -112,17 +112,11 @@ while True:
 
     #If 'x' has been pressed
     if cv.waitKey(33) == 120:
-        # read image
-        img_raw = cv.imread(first)
-        # select ROI function
-        roi = cv.selectROI(img_raw)
+        r = cv.selectROI(final)
+        imCrop = final[int(r[1]):int(r[1] + r[3]), int(r[0]):int(r[0] + r[2])]
+        cv.imshow("Saved Image", imCrop)
+        cv.imwrite("screenCV.jpg",imCrop)
 
-        print(roi)
-
-        # Crop selected roi from raw image
-        roi_cropped = img_raw[int(roi[1]):int(roi[1] + roi[3]), int(roi[0]):int(roi[0] + roi[2])]
-
-        cv.imwrite("crop.jpeg", roi_cropped)
     #Break if 'esc' has been pressed
     if cv.waitKey(33) == 27:
         break
