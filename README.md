@@ -3,10 +3,12 @@ Repozytorium utworzone na potrzeby zajęć "Narzędzia Sztucznej Inteligencji" -
 Znajdują się na nim rozwiązania zadań z ćwiczeń.  
 Autor rozwiązań: Igor Motowidło  
 
-# Zadanie 1
-Stworzenie programu inicjującego okno z odwroconym widokiem z kamery.  
+# Plik *.exe z pliku typu *.py
 
-  Link do pliku .exe:  
-  https://www.easypaste.org/file/QxZX3Jyn/zad1.exe?lang=pl  
-  Scan VirusTotal:  
-  https://www.virustotal.com/gui/url/6db6be0ea790a5c0d7581f7f9417990b4ef4491818bdbb66a87cb1b836a489b8/detection  
+1. Zainstalowanie pakietu pyinstaller:  
+``pip install pyinstaller``
+
+2.  Wykonanie komendy w folderze z plikiem typu .py:  
+``pyinstaller --onefile nazwa-pliku.py``
+
+3. Uruchomienie pliku nazwa-pliku.exe znajdującego się w katalogu .../dist/
