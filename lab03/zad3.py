@@ -22,38 +22,44 @@ while True:
     blue_upper = np.array([120, 255, 255], np.uint8)
     blue_mask = cv.inRange(hsvFrame, blue_lower, blue_upper)
 
-    # Morphological Transform, Dilation
-    # for each color and bitwise_and operator
-    # between imageFrame and mask determines
-    # to detect only that particular color
     kernal = np.ones((5, 5), "uint8")
 
-    #For blue color:
+    # For blue color:
     blue_mask = cv.dilate(blue_mask, kernal)
-    res_blue = cv.bitwise_and(imageFrame, imageFrame,blue_mask)
+    res_blue = cv.bitwise_and(imageFrame, imageFrame, blue_mask)
 
-        # Creating contour to track blue color
-    centers = []
-    contours, hierarchy = cv.findContours(blue_mask,cv.RETR_TREE,cv.CHAIN_APPROX_SIMPLE)
+    first = 0
+    second = 0
+    contour1 = None
+    contour2 = None
+        # Creating contour to track red color
+    contours, hierarchy = cv.findContours(blue_mask, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
         area = cv.contourArea(contour)
-        if area > 500:
-            x, y, w, h = cv.boundingRect(contour)
-            imageFrame = cv.rectangle(imageFrame, (x, y),(x + w, y + h),(255, 0, 0), 2)
-            cv.putText(imageFrame, "Blue", (x, y), cv.FONT_ITALIC, 1.0, (255, 0, 0))
+        if area > 1000:
+            if area > first:
+                first = area
+                contour1 = contour
 
-            M = cv.moments(contours[0])
-            cy = int(M['m01'] / M['m00'])
-            cx = int(M['m10'] / M['m00'])
-            centers.append([cx, cy])
-            imageFrame = cv.circle(imageFrame, (cx, cy), 7, (255, 255, 255), -1)
+            elif first > area > second:
+                second = area
+                contour2 = contour
 
+        x, y, w, h = cv.boundingRect(contour1)
+        imageFrame = cv.rectangle(frame, (x, y), ((x + w), (y + h)), (255, 0, 0), 2)
+        cv.putText(imageFrame, "Blue", (x, y), cv.FONT_ITALIC, 1.0, (255, 0, 0))
+        cx = x + int(w / 2)
+        cy = y + int(h / 2)
 
-            #cv.line(imageFrame,(centers[0][0], centers[0][1]),(x + int(w / 2), y + int(h / 2)), (0, 0, 0), 3,cv.LINE_AA)
-            #cv.line(imageFrame, (centers[0][0], centers[0][1]), (cx,cy), (0, 0, 0), 3,cv.LINE_AA)
-        if len(centers) == 2:
-            cv.line(imageFrame, (cx, cy), (x + int(w / 2), y + int(h / 2)), (0, 0, 0), 3,cv.LINE_AA)
-            #cv.line(imageFrame, (centers[0][0], centers[0][1]), (centers[1][0], centers[1][1]), (0, 0, 0), 3,cv.LINE_AA)
+        x2, y2, w2, h2 = cv.boundingRect(contour2)
+        imageFrame1 = cv.rectangle(frame, (x2, y2), ((x2 + w2), (y2 + h2)), (255, 0, 0), 2)
+        cv.putText(imageFrame, "Blue", (x, y), cv.FONT_ITALIC, 1.0, (255, 0, 0))
+        cx2 = x2 + int(w2 / 2)
+        cy2 = y2 + int(h2 / 2)
+        #if x<v+e && x>v-e
+        # if y == y2 or y + h == y + h2:
+        if (y <= y2 < y + 60) or (y + h == y2 + h2):
+            cv.line(imageFrame, (cx,cy), (cx2,cy2), (0, 0, 0),3,2)
     cv.imshow("Multiple Color Detection", imageFrame)
 
     #Break if 'esc' has been pressed
