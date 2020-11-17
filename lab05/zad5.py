@@ -1,13 +1,13 @@
 import cv2 as cv
 
 cascade_src = 'cars.xml'
-video_src = 'video.avi'
+video_src = 'vid.mp4'
 cap = cv.VideoCapture(video_src)
 
-min_contour_width = 50  # 40
-min_contour_height = 50  # 40
-approx = 10  # 10
-line_height = 100  # 550
+min_contour_width = 40
+min_contour_height = 40
+approx = 10
+line_height = 350
 matches = []
 count = 0
 
@@ -35,6 +35,7 @@ while True:
         if not contour_valid:
             continue
         cv.rectangle(frame, (x - approx, y - approx), (x + w + approx, y + h + approx), (0), 2)
+
         center = getCenter(x, y, w, h)
         matches.append(center)
         cv.circle(frame, center, 5, (255, 0, 0), -1)
